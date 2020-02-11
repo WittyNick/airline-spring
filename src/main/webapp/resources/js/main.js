@@ -1,8 +1,8 @@
 $(document).ready(function() {
     validateUser();
-    localizeMain();
-    $('#lang').on('change', changeLocaleEventHandler);
-    fillTableFlights();
+    // localizeMain();
+    // $('#lang').on('change', changeLocaleEventHandler);
+    // fillTableFlights();
 });
 
 function validateUser() {

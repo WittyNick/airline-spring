@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="${ctx}/static/css/main.css">
 
     <script defer src="${ctx}/static/js/lib/jquery-3.4.1.min.js"></script>
-    <script defer src="${ctx}/static/js/locale.js"></script>
+<%--    <script defer src="${ctx}/static/js/locale.js"></script>--%>
     <script defer src="${ctx}/static/js/main.js"></script>
 </head>
 <body>
@@ -52,6 +52,18 @@
         </tr>
         </thead>
         <tbody id="tableBody">
+        <c:forEach var="flight" items="${flights}">
+            <tr>
+                <td>${flight.getFlightNumber()}</td>
+                <td>${flight.getStartPoint()}</td>
+                <td>${flight.getDestinationPoint()}</td>
+                <td>${flight.getDepartureDate()}</td>
+                <td>${flight.getDepartureTime()}</td>
+                <td>${flight.getArrivalDate()}</td>
+                <td>${flight.getArrivalTime()}</td>
+                <td>${flight.getPlane()}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>

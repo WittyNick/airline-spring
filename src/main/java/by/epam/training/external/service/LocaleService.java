@@ -1,4 +1,7 @@
-package by.epam.training.external.locale;
+package by.epam.training.external.service;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,47 +9,38 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Locale;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 /**
  * Singleton.
  * The class allows read *.property files.
  */
-public enum LocaleManager {
-    INSTANCE;
+@Component
+@Scope("session")
+public class LocaleService {
     private final UTF8Control utf8Control = new UTF8Control();
+    private final String localePropertyFile = "locale.locale";
+    private ResourceBundle localeBundle;
+
+    public LocaleService() {
+        Locale defaultLocale = new Locale("en", "US");
+        localeBundle = ResourceBundle.getBundle(localePropertyFile, defaultLocale, utf8Control);
+    }
 
     /**
      * Reads localized word from resource file and returns in as String.
      *
-     * @param locale current user locale
      * @param key key-word that needs to be localized
      * @return localized word
      */
-    public String getString(Locale locale, String key) {
-        return getTextMap(locale, key).get(key);
+    public String getString(String key) {
+        return localeBundle.getString(key);
     }
 
-    /**
-     * Reads localized words from resource file and returns Mat<String, String>
-     *     where key is key-word, value is localized word.
-     *
-     * @param locale locale of current user
-     * @param keys array of key-words that needs to be localized
-     * @return Map of localized words
-     */
-    public Map<String, String> getTextMap(Locale locale, String... keys) {
-        String localePropertyFile = "locale.locale";
-        ResourceBundle localeBundle = ResourceBundle.getBundle(localePropertyFile, locale, utf8Control);
-        Map<String, String> map = new HashMap<>();
-        for (String key : keys) {
-            String text = "";
-            if (localeBundle.containsKey(key)) {
-                text = localeBundle.getString(key);
-            }
-            map.put(key, text);
-        }
-        return map;
+    public final void setLocale(Locale locale) {
+         localeBundle = ResourceBundle.getBundle(localePropertyFile, locale, utf8Control);
     }
 
     /**

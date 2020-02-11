@@ -5,7 +5,6 @@ import by.epam.training.external.dao.FlightDao;
 import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.entity.Crew;
 import by.epam.training.external.entity.Flight;
-import by.epam.training.external.locale.LocaleManager;
 import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +22,7 @@ import java.util.Locale;
 @Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
-    private LocaleManager manager = LocaleManager.INSTANCE;
+    private LocaleService localeService = new LocaleService();
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
     private FlightDao flightDao = DaoFactory.getInstance().getFlightDao();
@@ -97,11 +96,13 @@ public class FlightService {
     }
 
     private String getLocaleDatePattern(Locale locale) {
-        return manager.getString(locale, "date.format");
+        localeService.setLocale(locale);
+        return localeService.getString("date.format");
     }
 
     private String getLocaleTimePattern(Locale locale) {
-        return manager.getString(locale, "time.format");
+        localeService.setLocale(locale);
+        return localeService.getString("time.format");
     }
 
     public Flight convertToFlight(FlightDto flightDto, Locale locale) {

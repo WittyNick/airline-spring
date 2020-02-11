@@ -1,4 +1,4 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

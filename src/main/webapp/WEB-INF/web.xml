@@ -12,7 +12,9 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>by.epam.training.external.config.RootConfig</param-value>
+        <param-value>
+            by.epam.training.external.config.RootApplicationContextConfig
+        </param-value>
     </context-param>
 
     <listener>
@@ -30,7 +32,7 @@
             <param-name>contextConfigLocation</param-name>
             <!--Можно указать не класс с ServletConfig, а просто пакет для сканирования
             by.epam.training.external.config, если не разделять контексты-->
-            <param-value>by.epam.training.external.config.WebConfig</param-value>
+            <param-value>by.epam.training.external.config.WebServletContextConfig</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

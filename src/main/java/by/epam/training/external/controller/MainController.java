@@ -1,4 +1,4 @@
-package by.epam.training.external.springcontroller;
+package by.epam.training.external.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

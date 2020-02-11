@@ -10,10 +10,12 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class DispatcherService {
     private static final Logger log = LogManager.getLogger(DispatcherService.class);
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();

@@ -17,9 +17,9 @@
 hs_err_pid*
 
 # Intellij Idea
-.idea/
+/.idea/
 *.iml
 
 # Output folder
-target/
-out/
+/target/
+/out/

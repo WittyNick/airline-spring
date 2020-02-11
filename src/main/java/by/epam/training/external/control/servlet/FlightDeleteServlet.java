@@ -1,4 +1,4 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
 import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.service.AdministratorService;
@@ -15,8 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/administrator/save")
-public class FlightSaveServlet extends HttpServlet {
+@WebServlet("/flight/delete")
+public class FlightDeleteServlet extends HttpServlet {
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     private AdministratorService adminService = new AdministratorService();
 
@@ -24,7 +24,7 @@ public class FlightSaveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String jsonFlightDto = readJson(req);
         FlightDto bobtailFlightDto = gson.fromJson(jsonFlightDto, FlightDto.class);
-        adminService.createOrUpdateFlight(bobtailFlightDto);
+        adminService.cancelFlight(bobtailFlightDto);
     }
 
     private String readJson(HttpServletRequest req) throws IOException {

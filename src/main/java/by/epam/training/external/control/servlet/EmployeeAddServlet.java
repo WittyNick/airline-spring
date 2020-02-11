@@ -1,7 +1,7 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
 import by.epam.training.external.entity.Employee;
-import by.epam.training.external.service.DispatcherService;
+import by.epam.training.external.service.EmployeeService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,16 +15,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/dispatcher/employee/delete")
-public class EmployeeDeleteServlet extends HttpServlet {
+@WebServlet("/dispatcher/employee/add")
+public class EmployeeAddServlet extends HttpServlet {
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private DispatcherService dispatcherService = new DispatcherService();
+    private EmployeeService employeeService = new EmployeeService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String jsonEmployee = readJson(req);
         Employee employee = gson.fromJson(jsonEmployee, Employee.class);
-        dispatcherService.fireEmployee(employee.getId());
+        employeeService.saveEmployee(employee);
+        resp.setContentType("application/json; charset=UTF-8");
+        resp.getWriter().print(gson.toJson(employee));
     }
 
     private String readJson(HttpServletRequest req) throws IOException {

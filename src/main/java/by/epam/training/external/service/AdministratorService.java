@@ -7,7 +7,9 @@ import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AdministratorService {
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     private FlightService flightService = new FlightService();

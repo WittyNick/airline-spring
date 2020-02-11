@@ -3,7 +3,9 @@ package by.epam.training.external.service;
 import by.epam.training.external.dao.CrewDao;
 import by.epam.training.external.dao.DaoFactory;
 import by.epam.training.external.entity.Crew;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CrewService {
     private CrewDao crewDao = DaoFactory.getInstance().getCrewDao();
 

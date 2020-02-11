@@ -1,4 +1,4 @@
-package by.epam.training.external.controller.filter;
+package by.epam.training.external.control.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

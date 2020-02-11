@@ -1,4 +1,4 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
 import by.epam.training.external.entity.Crew;
 import by.epam.training.external.entity.Employee;

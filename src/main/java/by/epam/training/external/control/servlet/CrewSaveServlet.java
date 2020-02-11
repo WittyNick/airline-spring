@@ -1,7 +1,7 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
-import by.epam.training.external.entity.Employee;
-import by.epam.training.external.service.EmployeeService;
+import by.epam.training.external.entity.Flight;
+import by.epam.training.external.service.DispatcherService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,18 +15,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-@WebServlet("/dispatcher/employee/add")
-public class EmployeeAddServlet extends HttpServlet {
+@WebServlet("/dispatcher/save")
+public class CrewSaveServlet extends HttpServlet {
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private EmployeeService employeeService = new EmployeeService();
+    private DispatcherService dispatcherService = new DispatcherService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String jsonEmployee = readJson(req);
-        Employee employee = gson.fromJson(jsonEmployee, Employee.class);
-        employeeService.saveEmployee(employee);
-        resp.setContentType("application/json; charset=UTF-8");
-        resp.getWriter().print(gson.toJson(employee));
+        String jsonFlight = readJson(req);
+
+        // flight: only id and crew: full data (with employees)
+        Flight bobtailFlight = gson.fromJson(jsonFlight, Flight.class);
+        dispatcherService.editCrew(bobtailFlight);
     }
 
     private String readJson(HttpServletRequest req) throws IOException {

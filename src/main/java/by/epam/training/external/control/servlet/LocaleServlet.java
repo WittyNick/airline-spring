@@ -1,4 +1,4 @@
-package by.epam.training.external.controller.servlet;
+package by.epam.training.external.control.servlet;
 
 import by.epam.training.external.locale.LocaleManager;
 import com.google.gson.Gson;

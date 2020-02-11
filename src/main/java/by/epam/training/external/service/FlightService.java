@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
     private LocaleManager manager = LocaleManager.INSTANCE;
@@ -40,7 +42,6 @@ public class FlightService {
         List<Flight> flights = flightDao.findAll();
         tx.commit();
         return flights;
-
     }
 
     public void updateFlight(Flight flight) {

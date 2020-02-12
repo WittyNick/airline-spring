@@ -1,39 +1,13 @@
-$(document).ready(function() {
-    setUserRolePageView();
-    $('#lang').on('change', changeLocaleEventHandler);
-});
-
-function setUserRolePageView() {
-    $.ajax({
-        type: 'POST',
-        url: 'user/validate',
-        contentType: false,
-        dataType: 'text',
-        success: function (responseText) {
-            let $spans = $('#sign').children();
-            if ('administrator' === responseText) {
-                $spans.eq(1).removeClass('hidden');
-                $('#administratorTab').removeClass('hidden');
-            } else if ('dispatcher' === responseText) {
-                $spans.eq(1).removeClass('hidden');
-                $('#dispatcherTab').removeClass('hidden');
-            } else { // 'guest'
-                $spans.eq(0).removeClass('hidden');
-            }
-        }
-    });
-}
-
-function changeLocaleEventHandler() {
+$('#lang').on('change', function () {
     $.ajax({
         type: 'GET',
-        url: '?locale=' + $('#lang').val(),
+        url: '?locale=' + $(this).val(),
         contentType: false,
         success: function () {
             location.reload();
         }
     });
-}
+});
 
 function signOut() {
     $.ajax({

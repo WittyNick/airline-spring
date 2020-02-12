@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdministratorService {
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-    private FlightService flightService;
     private final String dateHtmlInputPattern = "yyyy-MM-dd";
     private final String htmlHtmlInputPattern = "HH:mm";
+
+    private FlightService flightService;
 
     public AdministratorService(FlightService flightService) {
         this.flightService = flightService;

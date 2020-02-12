@@ -79,14 +79,14 @@ html, body {
     padding: 3px;
 }
 
-.pseudolink {
+.pseudoLink {
     color: #1e90ff;
     cursor: pointer;
     transition-property: color;
     transition-duration: 200ms;
 }
 
-.pseudolink:hover {
+.pseudoLink:hover {
     color: black;
 }
 

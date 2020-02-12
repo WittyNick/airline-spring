@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -23,12 +24,16 @@
             <td id="mainTab" class="picketTab">
                 <spring:message code="main"/>
             </td>
-            <td id="administratorTab" class="tab hidden">
-                <a href="${ctx}/administrator"><spring:message code="administrator"/></a>
-            </td>
-            <td id="dispatcherTab" class="tab hidden">
-                <a href="${ctx}/dispatcher"><spring:message code="dispatcher"/></a>
-            </td>
+            <c:if test='${"administrator".equals(role)}'>
+                <td class="tab">
+                    <a href="${ctx}/administrator"><spring:message code="administrator"/></a>
+                </td>
+            </c:if>
+            <c:if test='${"dispatcher".equals(role)}'>
+                <td class="tab">
+                    <a href="${ctx}/dispatcher"><spring:message code="dispatcher"/></a>
+                </td>
+            </c:if>
             <td id="locale">
                 <spring:message code="lang" var="lang"/>
                 <select id="lang">
@@ -38,20 +43,24 @@
                 </select>
             </td>
             <td id="sign">
-                <span class="pseudolink hidden" onclick="location.href='${ctx}/signin'">
-                    <spring:message code="sign_in"/>
-                </span>
-                <span class="pseudolink hidden" onclick="signOut()">
-                    <spring:message code="sign_out"/>
-                </span>
+                <c:if test="${role == null}">
+                    <span class="pseudoLink" onclick="location.href='${ctx}/signin'">
+                        <spring:message code="sign_in"/>
+                    </span>
+                </c:if>
+                <c:if test="${role != null}">
+                    <span class="pseudoLink" onclick="signOut()">
+                        <spring:message code="sign_out"/>
+                    </span>
+                </c:if>
             </td>
         </tr>
     </table>
 
     <table id="tableFlights">
-        <caption id="tableCaption">Flights</caption>
+        <caption><spring:message code="flights"/></caption>
         <thead>
-        <tr id="hatRow">
+        <tr>
             <th><spring:message code="number"/></th>
             <th><spring:message code="from"/></th>
             <th><spring:message code="to"/></th>
@@ -62,7 +71,7 @@
             <th><spring:message code="plane"/></th>
         </tr>
         </thead>
-        <tbody id="tableBody">
+        <tbody>
         <c:forEach var="flight" items="${flights}">
             <tr>
                 <td>${flight.flightNumber}</td>

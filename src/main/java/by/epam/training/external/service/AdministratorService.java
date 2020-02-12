@@ -12,9 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdministratorService {
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-    private FlightService flightService = new FlightService();
+    private FlightService flightService;
     private final String dateHtmlInputPattern = "yyyy-MM-dd";
     private final String htmlHtmlInputPattern = "HH:mm";
+
+    public AdministratorService(FlightService flightService) {
+        this.flightService = flightService;
+    }
 
     public void cancelFlight(FlightDto flightDto) {
         Flight bobtailFlight = flightService.convertToFlight(flightDto, "");

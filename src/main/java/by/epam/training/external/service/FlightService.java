@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,10 +23,17 @@ import java.util.Locale;
 @Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
-    private LocaleService localeService = new LocaleService();
+
+    private MessageSource messageSource;
+
+//    private LocaleService localeService = new LocaleService();
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
     private FlightDao flightDao = DaoFactory.getInstance().getFlightDao();
+
+    public FlightService(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public void saveFlight(Flight flight) {
         flightDao.save(flight);
@@ -96,13 +104,11 @@ public class FlightService {
     }
 
     private String getLocaleDatePattern(Locale locale) {
-        localeService.setLocale(locale);
-        return localeService.getString("date.format");
+        return messageSource.getMessage("date.format", null, locale);
     }
 
     private String getLocaleTimePattern(Locale locale) {
-        localeService.setLocale(locale);
-        return localeService.getString("time.format");
+        return messageSource.getMessage("time.format", null, locale);
     }
 
     public Flight convertToFlight(FlightDto flightDto, Locale locale) {

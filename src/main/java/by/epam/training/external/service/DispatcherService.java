@@ -20,8 +20,12 @@ public class DispatcherService {
     private static final Logger log = LogManager.getLogger(DispatcherService.class);
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     private CrewService crewService = new CrewService();
-    private FlightService flightService = new FlightService();
+    private FlightService flightService;
     private EmployeeService employeeService = new EmployeeService();
+
+    public DispatcherService(FlightService flightService) {
+        this.flightService = flightService;
+    }
 
     public void disbandCrew(FlightDto flightDto, Locale locale) {
         Flight bobtailFlight = flightService.convertToFlight(flightDto, locale);

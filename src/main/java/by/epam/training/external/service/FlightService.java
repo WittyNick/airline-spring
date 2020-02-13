@@ -23,12 +23,8 @@ import java.util.Locale;
 @Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
-
     private MessageSource messageSource;
-
-//    private LocaleService localeService = new LocaleService();
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-
     private FlightDao flightDao = DaoFactory.getInstance().getFlightDao();
 
     public FlightService(MessageSource messageSource) {

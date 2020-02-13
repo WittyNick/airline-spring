@@ -35,15 +35,15 @@ public class WebServletContextConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry
-                .addResourceHandler("/static/**") // uri handler для мэпинга на ресурсы
-                .addResourceLocations("/resources/"); // путь к ресурсам
+        registry.addResourceHandler("/**/*.js").addResourceLocations("/resources/js/");
+        registry.addResourceHandler("/**/*.css").addResourceLocations("/resources/css/");
+        registry.addResourceHandler("/img/**").addResourceLocations("/resources/img/");
     }
 
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:locale/locale");
+        messageSource.setBasename("classpath:L10n/locale");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
@@ -58,7 +58,7 @@ public class WebServletContextConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
-//        localeInterceptor.setParamName("locale"); // "locale" is used by default
+//        localeInterceptor.setParamName("locale"); // "locale" используется по умолчанию
         registry.addInterceptor(localeInterceptor);
     }
 }

@@ -2,18 +2,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-
 <html>
 <head>
     <meta charset="UTF-8">
     <title>MAIN</title>
-    <link rel="shortcut icon" href="${ctx}/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="${ctx}/static/css/common.css">
-    <link rel="stylesheet" href="${ctx}/static/css/main.css">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="main.css">
 
-    <script defer src="${ctx}/static/js/lib/jquery-3.4.1.min.js"></script>
-    <script defer src="${ctx}/static/js/main.js"></script>
+    <script defer src="lib/jquery-3.4.1.min.js"></script>
+    <script defer src="main.js"></script>
 </head>
 <body>
 <div id="content" lang="<spring:message code="lang"/>">

@@ -29,12 +29,13 @@ public class DispatcherService {
 
     public void disbandCrew(FlightDto flightDto, Locale locale) {
         Flight bobtailFlight = flightService.convertToFlight(flightDto, locale);
+        int crewId = bobtailFlight.getCrew().getId();
         bobtailFlight.setCrew(null);
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
         try {
             flightService.updateFlight(bobtailFlight);
-            Crew crew = crewService.findCrew(bobtailFlight.getCrew().getId());
+            Crew crew = crewService.findCrew(crewId);
             crewService.deleteCrew(crew);
             tx.commit();
         } catch (RuntimeException e) {

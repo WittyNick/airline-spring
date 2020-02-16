@@ -1,37 +1,17 @@
 package by.epam.training.external.dto;
 
 import by.epam.training.external.entity.Crew;
-import com.google.gson.annotations.Expose;
 
 public class FlightDto {
-    @Expose
     private int id;
-
-    @Expose
     private int flightNumber;
-
-    @Expose
     private String startPoint;
-
-    @Expose
     private String destinationPoint;
-
-    @Expose
     private String departureDate;
-
-    @Expose
     private String departureTime;
-
-    @Expose
     private String arrivalDate;
-
-    @Expose
     private String arrivalTime;
-
-    @Expose
     private String plane;
-
-    @Expose
     private Crew crew;
 
     public int getId() {
@@ -112,5 +92,21 @@ public class FlightDto {
 
     public void setCrew(Crew crew) {
         this.crew = crew;
+    }
+
+    @Override
+    public String toString() {
+        return "FlightDto{" +
+                "id=" + id +
+                ", flightNumber=" + flightNumber +
+                ", startPoint='" + startPoint + '\'' +
+                ", destinationPoint='" + destinationPoint + '\'' +
+                ", departureDate='" + departureDate + '\'' +
+                ", departureTime='" + departureTime + '\'' +
+                ", arrivalDate='" + arrivalDate + '\'' +
+                ", arrivalTime='" + arrivalTime + '\'' +
+                ", plane='" + plane + '\'' +
+                ", crew=" + crew +
+                '}';
     }
 }

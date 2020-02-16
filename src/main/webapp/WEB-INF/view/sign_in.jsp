@@ -1,18 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>LOGIN</title>
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<c:url value="/img/favicon.ico"/>" type="image/x-icon">
 
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="sign_in.css">
+    <link rel="stylesheet" href="<c:url value="/common.css"/>">
+    <link rel="stylesheet" href="<c:url value="/sign_in.css"/>">
 
-    <script defer src="lib/jquery-3.4.1.min.js"></script>
-    <script defer src="sign_in.js"></script>
+    <script defer src="<c:url value="/lib/jquery-3.4.1.min.js"/>"></script>
+    <script defer src="<c:url value="/sign_in.js"/>"></script>
 </head>
 <body>
 <div id="content" lang="<spring:message code="lang"/>">
@@ -35,16 +33,17 @@
         <legend><spring:message code="legend_sign_in"/></legend>
         <form>
             <label for="login"><spring:message code="login"/></label><br>
-            <input id="login" name="login" type="text" tabindex="1" autofocus>
-            <span id="messageLogin" class="message"></span><br>
+            <input id="login" name="login" type="text" autofocus>
+            <span id="messageLogin" class="message hidden"><spring:message code="message.sign_in.login"/></span><br>
 
             <label for="password"><spring:message code="password"/></label><br>
-            <input id="password" name="password" type="password" tabindex="2" autofocus>
-            <span id="messagePassword" class="message"></span><br>
-            <div id="messageFail" class="message"></div>
+            <input id="password" name="password" type="password" autofocus>
+            <span id="messagePassword" class="message hidden"><spring:message code="message.sign_in.password"/></span><br>
+            <div id="messageFail" class="message hidden"><spring:message code="message.sign_in.fail"/></div>
 
-            <input id="buttonSubmit" type="button" value="<spring:message code="enter"/>" tabindex="3" autofocus>
-            <input id="buttonCancel" type="button" value="<spring:message code="cancel"/>" onclick="location.href='${ctx}'">
+            <input id="buttonSubmit" type="button" value="<spring:message code="enter"/>" autofocus>
+            <input id="buttonCancel" type="button" value="<spring:message code="cancel"/>"
+                   onclick="location.href='<c:url value="/"/>'"/>
         </form>
     </fieldset>
     <br>

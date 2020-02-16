@@ -1,6 +1,6 @@
 package by.epam.training.external.entity;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,23 +12,20 @@ import java.util.Set;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
     private int id;
 
     @Column
-    @Expose
     private String name = "";
 
     @Column
-    @Expose
     private String surname = "";
 
     @Column
-    @Expose
     private Position position;
 
     @ManyToMany(mappedBy = "employees", fetch = FetchType.EAGER)
-    private Set<Crew> crews; // transient
+    @JsonIgnore
+    private Set<Crew> crews;
 
     public Employee() {
         crews = new HashSet<>();

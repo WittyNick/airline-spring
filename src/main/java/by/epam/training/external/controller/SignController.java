@@ -1,13 +1,13 @@
 package by.epam.training.external.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/signin")
+@RequestMapping("/sign")
 public class SignController {
 
     @GetMapping
@@ -15,22 +15,23 @@ public class SignController {
         return "sign_in";
     }
 
-    @PostMapping
+    @PostMapping("/check")
     @ResponseBody
-    protected String checkUserRole(@RequestParam String login, @RequestParam String password, HttpServletRequest req) {
+    public String checkUserRole(@RequestParam String login, @RequestParam String password, HttpSession session) {
         if ("admin".equals(login) && "admin".equals(password)) {
-            saveUserRoleToSession(req,"administrator");
+            session.setAttribute("role", "administrator");
             return "administrator";
         }
         if ("dispatcher".equals(login) && "dispatcher".equals(password)) {
-            saveUserRoleToSession(req, "dispatcher");
+            session.setAttribute("role", "dispatcher");
             return "dispatcher";
         }
         return "";
     }
 
-    private void saveUserRoleToSession(HttpServletRequest req, String role) {
-        HttpSession session = req.getSession();
-        session.setAttribute("role", role);
+    @PostMapping("/out")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void signOut(HttpSession session) {
+        session.invalidate();
     }
 }

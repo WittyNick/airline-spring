@@ -1,7 +1,5 @@
-let inputLogin = $('#login');
-let inputPassword = $('#password');
-
-loadErrorMessages();
+let $inputLogin = $('#login');
+let $inputPassword = $('#password');
 
 $('#lang').on('change', function () {
     $.ajax({
@@ -20,57 +18,45 @@ $('#buttonSubmit').on('click', function () {
     }
     $.ajax({
         type: 'POST',
-        url: 'signin',
-        data: 'login=' + $(inputLogin).val() + '&password=' + $(inputPassword).val(),
+        url: 'sign/check',
+        data: 'login=' + $inputLogin.val() + '&password=' + $inputPassword.val(),
         dataType: "text",
-        success: onSignInAction
+        success: function (userRole) {
+            if ("administrator" === userRole) {
+                $(location).prop('href', 'administrator');
+            } else if('dispatcher' === userRole) {
+                $(location).prop('href', 'dispatcher');
+            } else {
+                $inputPassword.val('');
+                $inputLogin.select();
+                $messageFail.removeClass('hidden');
+            }
+        }
     });
 });
 
-function onSignInAction(userRole) {
-    if ('administrator' === userRole) {
-        $(location).prop('href', 'administrator');
-    } else if ('dispatcher' === userRole) {
-        $(location).prop('href', 'dispatcher');
-    } else {
-        $(inputPassword).val('');
-        $(inputLogin).select();
-        $('#messageFail').html(dict['message.sign_in.fail']);
-    }
-}
+let $messagePassword = $('#messagePassword');
+let $messageLogin =  $('#messageLogin');
+let $messageFail = $('#messageFail');
 
 function validate() {
     let isValid = true;
-    if ('' === $(inputPassword).val()) {
-        $('#messagePassword').html(dict['message.sign_in.password']);
-        $(inputPassword).focus();
+    reset();
+    if ('' === $inputPassword.val()) {
+        $messagePassword.removeClass('hidden');
+        $inputPassword.focus();
         isValid = false;
     }
-    if ('' === $(inputLogin).val().trim()) {
-        $('#messageLogin').html(dict['message.sign_in.login']);
-        inputLogin.select();
+    if ('' === $inputLogin.val().trim()) {
+        $messageLogin.removeClass('hidden');
+        $inputLogin.select();
         isValid = false;
     }
-    $('#messageFail').html('');
     return isValid;
 }
 
-let dict;
-
-function loadErrorMessages() {
-    let words = [
-        'message.sign_in.login',
-        'message.sign_in.password',
-        'message.sign_in.fail'
-    ];
-    $.ajax({
-        type: 'POST',
-        url: 'locale',
-        data: JSON.stringify(words),
-        contentType: 'json',
-        dataType: 'json',
-        success: function (map) {
-            dict = map;
-        }
-    });
+function reset() {
+    $messagePassword.addClass('hidden');
+    $messageLogin.addClass('hidden');
+    $messageFail.addClass('hidden');
 }

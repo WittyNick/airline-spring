@@ -1,6 +1,6 @@
 package by.epam.training.external.entity;
 
-import com.google.gson.annotations.Expose;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,11 +12,9 @@ import java.util.Set;
 public class Crew {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
     private int id;
 
     @Column
-    @Expose
     private String name = "";
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -24,11 +22,11 @@ public class Crew {
             joinColumns = @JoinColumn(name = "crew_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
-    @Expose
     private Set<Employee> employees;
 
     @OneToOne(mappedBy = "crew")
-    private Flight flight; // transient
+    @JsonIgnore
+    private Flight flight;
 
     public Crew() {
         employees = new HashSet<>();

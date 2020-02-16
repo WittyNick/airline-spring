@@ -3,34 +3,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>MAIN</title>
+    <title>DISPATCHER</title>
     <link rel="shortcut icon" href="<c:url value="/img/favicon.ico"/>" type="image/x-icon">
 
     <link rel="stylesheet" href="<c:url value="/common.css"/>">
-    <link rel="stylesheet" href="<c:url value="/main.css"/>">
+    <link rel="stylesheet" href="<c:url value="/dispatch.css"/>">
 
     <script defer src="<c:url value="/lib/jquery-3.4.1.min.js"/>"></script>
-    <script defer src="<c:url value="/main.js"/>"></script>
+    <script defer src="<c:url value="/dispatch.js"/>"></script>
 </head>
 <body>
-<div id="content" lang="<spring:message code="lang"/>">
+<span id="confirmDelete" class="hidden"><spring:message code="crew.confirm.delete"/></span>
+
+<div id="content" <spring:message code="lang"/>>
     <div id="empty"></div>
     <table id="header">
         <tr>
             <td id="space"></td>
-            <td id="mainTab" class="picketTab">
-                <spring:message code="main"/>
-            </td>
-            <c:if test='${"administrator".equals(role)}'>
-                <td class="tab">
-                    <a href="<c:url value="/administrator"/>"><spring:message code="administrator"/></a>
-                </td>
-            </c:if>
-            <c:if test='${"dispatcher".equals(role)}'>
-                <td class="tab">
-                    <a href="<c:url value="/dispatcher"/>"><spring:message code="dispatcher"/></a>
-                </td>
-            </c:if>
+            <td id="mainTab" class="tab"><a href="<c:url value="/"/>"><spring:message code="main"/></a></td>
+            <td id="dispatcherTab" class="picketTab"><spring:message code="dispatcher"/></td>
             <td id="locale">
                 <spring:message code="lang" var="lang"/>
                 <select id="lang">
@@ -40,24 +31,16 @@
                 </select>
             </td>
             <td id="sign">
-                <c:if test="${role == null}">
-                    <span class="pseudoLink" onclick="location.href='<c:url value="/sign"/>'">
-                        <spring:message code="sign_in"/>
-                    </span>
-                </c:if>
-                <c:if test="${role != null}">
-                    <span class="pseudoLink" onclick="signOut()">
-                        <spring:message code="sign_out"/>
-                    </span>
-                </c:if>
+                <span class="pseudolink" onclick="signOut()"><spring:message code="sign_out"/></span>
             </td>
         </tr>
     </table>
 
-    <table id="tableFlights">
-        <caption><spring:message code="flights"/></caption>
+    <table id="mainTable">
+        <caption id="tableCaption"><spring:message code="flights"/></caption>
         <thead>
-        <tr>
+        <tr id="hatRow">
+            <th>id</th>
             <th><spring:message code="number"/></th>
             <th><spring:message code="from"/></th>
             <th><spring:message code="to"/></th>
@@ -66,11 +49,14 @@
             <th><spring:message code="arrival_date"/></th>
             <th><spring:message code="arrival_time"/></th>
             <th><spring:message code="plane"/></th>
+            <th>crewId</th>
+            <th><spring:message code="crew"/></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
         <c:forEach var="flight" items="${flights}">
             <tr>
+                <td>${flight.id}</td>
                 <td>${flight.flightNumber}</td>
                 <td>${flight.startPoint}</td>
                 <td>${flight.destinationPoint}</td>
@@ -79,10 +65,25 @@
                 <td>${flight.arrivalDate}</td>
                 <td>${flight.arrivalTime}</td>
                 <td>${flight.plane}</td>
+                <td>
+                    <c:if test="${flight.crew == null}">0</c:if>
+                    <c:if test="${flight.crew != null}">${flight.crew.id}</c:if>
+                </td>
+                <td>${flight.crew.name}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <div id="buttons">
+        <form id="formEdit" method="POST" action="<c:url value="/dispatcher/edit"/>">
+            <input id="flightId" type="hidden" name="flightId">
+            <input id="crewId" type="hidden" name="crewId">
+            <input id="buttonEdit" type="button" value="<spring:message code="crew.edit"/>"
+                   onclick="onEditClick()">
+            <input id="buttonDelete" type="button" value="<spring:message code="crew.delete"/>"
+                   onclick="onDeleteClick()">
+        </form>
+    </div>
 </div>
 </body>
 </html>

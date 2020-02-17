@@ -1,7 +1,7 @@
 package by.epam.training.external.controller;
 
 import by.epam.training.external.dto.FlightDto;
-import by.epam.training.external.service.AdminService;
+import by.epam.training.external.service.AdministratorService;
 import by.epam.training.external.service.FlightService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -16,12 +16,15 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/administrator")
 public class AdminController {
-    private AdminService adminService;
+    private AdministratorService administratorService;
     private FlightService flightService;
     private LocaleResolver localeResolver;
 
-    public AdminController(AdminService adminService, FlightService flightService, LocaleResolver localeResolver) {
-        this.adminService = adminService;
+    public AdminController(
+            AdministratorService administratorService,
+            FlightService flightService,
+            LocaleResolver localeResolver) {
+        this.administratorService = administratorService;
         this.flightService = flightService;
         this.localeResolver = localeResolver;
     }
@@ -37,12 +40,12 @@ public class AdminController {
     @PostMapping("/delete")
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteFlight(@RequestBody FlightDto bobtailFlightDto) {
-        adminService.cancelFlight(bobtailFlightDto);
+        administratorService.cancelFlight(bobtailFlightDto);
     }
 
     @PostMapping("/edit")
     public String goToFlightEditPage(@RequestParam Integer flightId, Model model) {
-        FlightDto flightDto = adminService.getFlightDtoById(flightId);
+        FlightDto flightDto = administratorService.getFlightDtoById(flightId);
         model.addAttribute("flight", flightDto);
         return "flight_edit";
     }
@@ -50,6 +53,6 @@ public class AdminController {
     @PostMapping("/save")
     @ResponseStatus(value = HttpStatus.OK)
     public void saveFlight(@RequestBody FlightDto bobtailFlightDto) {
-        adminService.createOrUpdateFlight(bobtailFlightDto);
+        administratorService.createOrUpdateFlight(bobtailFlightDto);
     }
 }

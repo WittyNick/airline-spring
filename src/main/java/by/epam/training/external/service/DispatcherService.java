@@ -68,9 +68,9 @@ public class DispatcherService {
 
     public void fireEmployee(int employeeId) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.getTransaction();
+        Transaction tx = session.beginTransaction();
         try {
-            Employee employee = employeeService.findEmployee(employeeId);
+            final Employee employee = employeeService.findEmployee(employeeId);
             employee.getCrews().forEach(crew -> {
                 crew.getEmployees().remove(employee);
                 crewService.updateCrew(crew);

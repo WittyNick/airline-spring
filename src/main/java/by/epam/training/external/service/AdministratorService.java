@@ -10,14 +10,14 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdminService {
+public class AdministratorService {
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
     private final String dateHtmlInputPattern = "yyyy-MM-dd";
     private final String htmlHtmlInputPattern = "HH:mm";
 
     private FlightService flightService;
 
-    public AdminService(FlightService flightService) {
+    public AdministratorService(FlightService flightService) {
         this.flightService = flightService;
     }
 

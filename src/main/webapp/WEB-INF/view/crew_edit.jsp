@@ -48,10 +48,10 @@
 
     <div id="editElements">
         <label id="labelName" for="name"><spring:message code="crew.edit.name"/></label><br>
-
         <input id="name" type="text" value="${crew.name}">
-
-        <span id="errorCrewName" class="message hidden"><spring:message code="message.crew.edit.enter_crew_name"/></span>
+        <span id="errorCrewName" class="message hidden">
+            <spring:message code="message.crew.edit.enter_crew_name"/>
+        </span>
         <table id="employeeList">
             <caption id="captionEmployeeList"><spring:message code="crew.edit.employee_list"/></caption>
             <thead>
@@ -109,10 +109,15 @@
                 </td>
             </tr>
         </table>
-
-        <div id="errorEmployeeName" class="message hidden"><spring:message code="message.crew.edit.enter_employee_name"/></div>
-        <div id="errorEmployeeSurname" class="message hidden"><spring:message code="message.crew.edit.enter_employee_surname"/></div>
-        <div id="errorEmployeeNameAndSurname" class="message hidden"><spring:message code="message.crew.edit.enter_employee_name_and_surname"/></div>
+        <div id="errorEmployeeName" class="message hidden">
+            <spring:message code="message.crew.edit.enter_employee_name"/>
+        </div>
+        <div id="errorEmployeeSurname" class="message hidden">
+            <spring:message code="message.crew.edit.enter_employee_surname"/>
+        </div>
+        <div id="errorEmployeeNameAndSurname" class="message hidden">
+            <spring:message code="message.crew.edit.enter_employee_name_and_surname"/>
+        </div>
 
         <table id="employeeBase">
             <caption id="captionEmployeeBase"><spring:message code="crew.edit.employee_base"/></caption>
@@ -125,7 +130,6 @@
                 <th><spring:message code="position"/></th>
             </tr>
             </thead>
-
             <tbody id="employeeBaseBody">
             <c:forEach var="employee" items="${employees}">
                 <tr>

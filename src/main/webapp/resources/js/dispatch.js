@@ -38,7 +38,7 @@ function onDeleteClick() {
     }
     let $selectedFlightCells = $(selectedRow).children();
     let crewId = +$selectedFlightCells.eq(9).html();
-    if (crewId === 0 || !confirm($('#confirmDelete').html())) {
+    if (crewId === 0 || !confirm(dict['confirmDelete'])) {
         return;
     }
     let flight = {

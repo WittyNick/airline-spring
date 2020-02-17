@@ -26,7 +26,7 @@ public class EmployeeService {
         tx.commit();
     }
 
-    public Employee findEmployee(int id) { // no tx fireEmployee()
+    public Employee findEmployee(int id) {
         return employeeDao.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class EmployeeService {
         return employeeDao.findAll();
     }
 
-    public void deleteEmployee(Employee employee) { // no tx fireEmployee()
+    public void deleteEmployee(Employee employee) {
         employeeDao.delete(employee);
     }
 }

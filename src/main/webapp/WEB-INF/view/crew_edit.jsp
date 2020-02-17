@@ -11,10 +11,17 @@
 
     <script defer src="<c:url value="/lib/jquery-3.4.1.min.js"/>"></script>
     <script defer src="<c:url value="/crew_edit.js"/>"></script>
+    <script>
+        let dict = {
+            "confirmFireEmployee": '<spring:message code="crew.edit.confirm.fire_employee"/>',
+            "PILOT": '<spring:message code="pilot"/>',
+            "NAVIGATOR": '<spring:message code="navigator"/>',
+            "COMMUNICATOR": '<spring:message code="communicator"/>',
+            "STEWARDESS": '<spring:message code="stewardess"/>'
+        }
+    </script>
 </head>
 <body>
-<span id="confirmFireEmployee" class="hidden"><spring:message code="crew.edit.confirm.fire_employee"/></span>
-
 <div id="content" lang="<spring:message code="lang"/>">
     <div id="empty"></div>
     <table id="header">
@@ -44,7 +51,7 @@
 
         <input id="name" type="text" value="${crew.name}">
 
-        <span id="messageName" class="message"></span>
+        <span id="errorCrewName" class="message hidden"><spring:message code="message.crew.edit.enter_crew_name"/></span>
         <table id="employeeList">
             <caption id="captionEmployeeList"><spring:message code="crew.edit.employee_list"/></caption>
             <thead>
@@ -63,7 +70,7 @@
                     <td>${employee.name}</td>
                     <td>${employee.surname}</td>
                     <td>${employee.position.name()}</td>
-                    <td></td>
+                    <td><spring:message code="${employee.position.name().toLowerCase()}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -98,11 +105,15 @@
                 <td>
                     <br>
                     <input id="buttonEngageEmployee" type="button"
-                           value="<spring:message code="crew.edit.engage_employee"/>" onclick="engageEmployeeAction()">
+                           value="<spring:message code="crew.edit.engage_employee"/>" onclick="onEngageEmployeeClick()">
                 </td>
             </tr>
         </table>
-        <div id="messageNewEmployee" class="message"></div>
+
+        <div id="errorEmployeeName" class="message hidden"><spring:message code="message.crew.edit.enter_employee_name"/></div>
+        <div id="errorEmployeeSurname" class="message hidden"><spring:message code="message.crew.edit.enter_employee_surname"/></div>
+        <div id="errorEmployeeNameAndSurname" class="message hidden"><spring:message code="message.crew.edit.enter_employee_name_and_surname"/></div>
+
         <table id="employeeBase">
             <caption id="captionEmployeeBase"><spring:message code="crew.edit.employee_base"/></caption>
             <thead>
@@ -122,7 +133,7 @@
                     <td>${employee.name}</td>
                     <td>${employee.surname}</td>
                     <td>${employee.position.name()}</td>
-                    <td></td>
+                    <td><spring:message code="${employee.position.name().toLowerCase()}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -130,7 +141,7 @@
         <input id="buttonAddToCrew" type="button" value="<spring:message code="crew.edit.add_to_crew"/>"
                onclick="onAddToCrewClick()">
         <input id="buttonFireEmployee" type="button" value="<spring:message code="crew.edit.fire_employee"/>"
-               onclick="fireEmployeeAction()"><br>
+               onclick="onFireEmployeeClick()"><br>
     </div>
     <div id="buttons">
         <input id="buttonSave" type="button" value="<spring:message code="crew.edit.save"/>" onclick="saveAction()">

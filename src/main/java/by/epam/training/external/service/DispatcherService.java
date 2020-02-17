@@ -70,7 +70,7 @@ public class DispatcherService {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.getTransaction();
         try {
-            final Employee employee = employeeService.findEmployee(employeeId);
+            Employee employee = employeeService.findEmployee(employeeId);
             employee.getCrews().forEach(crew -> {
                 crew.getEmployees().remove(employee);
                 crewService.updateCrew(crew);

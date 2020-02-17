@@ -11,10 +11,13 @@
 
     <script defer src="<c:url value="/lib/jquery-3.4.1.min.js"/>"></script>
     <script defer src="<c:url value="/dispatch.js"/>"></script>
+    <script>
+        let dict = {
+            "confirmDelete": '<spring:message code="crew.confirm.delete"/>'
+        }
+    </script>
 </head>
 <body>
-<span id="confirmDelete" class="hidden"><spring:message code="crew.confirm.delete"/></span>
-
 <div id="content" <spring:message code="lang"/>>
     <div id="empty"></div>
     <table id="header">
@@ -31,7 +34,7 @@
                 </select>
             </td>
             <td id="sign">
-                <span class="pseudolink" onclick="signOut()"><spring:message code="sign_out"/></span>
+                <span class="pseudoLink" onclick="signOut()"><spring:message code="sign_out"/></span>
             </td>
         </tr>
     </table>

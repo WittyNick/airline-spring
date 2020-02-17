@@ -69,7 +69,7 @@ function onAddToCrewClick() {
     selectedBaseRow = null;
 }
 
-function engageEmployeeAction() {
+function onEngageEmployeeClick() {
     if (!validateNewEmployee()) {
         return;
     }
@@ -85,42 +85,42 @@ function engageEmployeeAction() {
         data: JSON.stringify(employee),
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
-        success: onEngageEmployeeCallback
+        success: function () {
+            let $row = $('<tr>').on('click', onEmployeeListRowClick);
+            let cells = '<td>' + employee.id +
+                '</td><td>' + employee.name +
+                '</td><td>' + employee.surname +
+                '</td><td>' + employee.position +
+                '</td><td>' + dict[employee.position] + '</td>';
+            $row.html(cells);
+            $employeeListBody.append($row);
+            $row.click();
+
+            $('#newEmployeeName').val('');
+            $('#newEmployeeSurname').val('');
+        }
     });
 }
 
-function onEngageEmployeeCallback(employee) {
-    let $row = $('<tr>').on('click', onEmployeeListRowClick);
-    let cells = '<td>' + employee.id +
-        '</td><td>' + employee.name +
-        '</td><td>' + employee.surname +
-        '</td><td>' + employee.position +
-        '</td><td>' + dict[employee.position.toLowerCase()] + '</td>';
-
-    $row.html(cells);
-    $employeeListBody.append($row);
-    $row.click();
-
-    $('#newEmployeeName').val('');
-    $('#newEmployeeSurname').val('');
-}
-
-function fireEmployeeAction() {
-    if (selectedBaseRow == null || !confirm($('#confirmFireEmployee').html())) {
+function onFireEmployeeClick() {
+    if (selectedBaseRow == null || !confirm(dict['confirmFireEmployee'])) {
         return;
     }
-    let $cells = $(selectedBaseRow).children();
-    let employee = {
-        'id': $cells.eq(0).html(),
-        'name': $cells.eq(1).html(),
-        'surname': $cells.eq(2).html(),
-        'position': $cells.eq(3).html()
-    };
+    // let $cells = $(selectedBaseRow).children();
+
+    let employeeId = $(selectedBaseRow).children().eq(0).html();
+
+    // let employee = {
+    //     'id': $cells.eq(0).html(),
+    //     'name': $cells.eq(1).html(),
+    //     'surname': $cells.eq(2).html(),
+    //     'position': $cells.eq(3).html()
+    // };
     $.ajax({
         type: 'POST',
         url: 'employee/delete',
-        data: JSON.stringify(employee),
-        contentType: 'application/json; charset=UTF-8',
+        data: employeeId,
+        contentType: 'text/plain; charset=UTF-8',
         success: function () {
             $(selectedBaseRow).remove();
             selectedBaseRow = null;
@@ -172,19 +172,12 @@ function signOut() {
     });
 }
 
-let messageCrewNameIndex = 0;
-let messageNewEmployeeIndex = 0;
-
 function validateCrew() {
-    let isValid = true;
     if ('' === $('#name').val().trim()) {
-        messageCrewNameIndex = 1;
-        isValid = false;
-    } else {
-        messageCrewNameIndex = 0;
+        $('#errorCrewName').removeClass('hidden');
+        return false;
     }
-    showErrorMessages();
-    return isValid;
+    return true;
 }
 
 function validateNewEmployee() {
@@ -192,26 +185,21 @@ function validateNewEmployee() {
     let $newEmployeeName = $('#newEmployeeName');
     let $newEmployeeSurname = $('#newEmployeeSurname');
     if ('' === $newEmployeeName.val().trim() && '' === $newEmployeeSurname.val().trim()) {
-        messageNewEmployeeIndex = 4;
+        showErrorEmployeeMessage($('#errorEmployeeNameAndSurname'));
         isValid = false;
     } else if ('' === $newEmployeeName.val().trim()) {
-        messageNewEmployeeIndex = 2;
+        showErrorEmployeeMessage($('#errorEmployeeName'));
         isValid = false;
     } else if ('' === $newEmployeeSurname.val().trim()) {
-        messageNewEmployeeIndex = 3;
+        showErrorEmployeeMessage($('#errorEmployeeSurname'));
         isValid = false;
-    } else {
-        messageNewEmployeeIndex = 0;
     }
-    $('#messageNewEmployee').html(messages[messageNewEmployeeIndex]);
-
-    setTimeout(function () {
-        messageNewEmployeeIndex = 0;
-        $('#messageNewEmployee').html(messages[messageNewEmployeeIndex]);
-    }, 2000);
     return isValid;
 }
 
-function showErrorMessages() {
-    $('#messageName').html(messages[messageCrewNameIndex]);
+function showErrorEmployeeMessage($errorMessage) {
+    $errorMessage.removeClass('hidden');
+    setTimeout(function () {
+        $errorMessage.addClass('hidden');
+    }, 2000);
 }

@@ -62,6 +62,6 @@ select {
     font-style: oblique;
 }
 
-#messageNewEmployee {
+#errorEmployeeName {
     height: 10px;
 }

@@ -11,6 +11,11 @@
 
     <script defer src="<c:url value="/lib/jquery-3.4.1.min.js"/>"></script>
     <script defer src="<c:url value="/admin.js"/>"></script>
+    <script>
+        let dict = {
+            "confirmDelete": '<spring:message code="flight.confirm.delete"/>'
+        }
+    </script>
 </head>
 <body>
 <span id="confirmDelete" class="hidden"><spring:message code="flight.confirm.delete"/></span>

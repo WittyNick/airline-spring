@@ -36,7 +36,7 @@ function onAddClick() {
 }
 
 function onDeleteClick() {
-    if (selectedRow == null || !confirm($('#confirmDelete').html())) {
+    if (selectedRow == null || !confirm(dict['confirmDelete'])) {
         return;
     }
     let $selectedFlightCells = $(selectedRow).children();

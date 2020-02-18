@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,16 +17,19 @@ public class EmployeeDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public void save(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
         session.save(employee);
     }
 
+    @Transactional
     public Employee findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Employee.class, id);
     }
 
+    @Transactional
     @SuppressWarnings(value = "unchecked")
     public List<Employee> findAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -33,11 +37,7 @@ public class EmployeeDao {
         return query.list();
     }
 
-    public void update(Employee employee) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(employee);
-    }
-
+    @Transactional
     public void delete(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(employee);

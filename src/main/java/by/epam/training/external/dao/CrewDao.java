@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,28 +17,25 @@ public class CrewDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public void save(Crew crew) {
         Session session = sessionFactory.getCurrentSession();
         session.save(crew);
     }
 
+    @Transactional
     public Crew findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Crew.class, id);
     }
 
-    @SuppressWarnings(value = "unchecked")
-    public List<Crew> findAll() {
-        Session session = sessionFactory.getCurrentSession();
-        Query<Crew> query = session.createQuery("FROM Crew");
-        return query.list();
-    }
-
+    @Transactional
     public void update(Crew crew) {
         Session session = sessionFactory.getCurrentSession();
         session.update(crew);
     }
 
+    @Transactional
     public void delete(Crew crew) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(crew);

@@ -10,96 +10,67 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
 
 @Service
 public class DispatcherService {
-    private static final Logger log = LogManager.getLogger(DispatcherService.class);
-    private SessionFactory sessionFactory;
     private CrewService crewService;
     private FlightService flightService;
     private EmployeeService employeeService;
 
-    public DispatcherService(SessionFactory sessionFactory, CrewService crewService, FlightService flightService, EmployeeService employeeService) {
-        this.sessionFactory = sessionFactory;
+    public DispatcherService(CrewService crewService, FlightService flightService, EmployeeService employeeService) {
         this.crewService = crewService;
         this.flightService = flightService;
         this.employeeService = employeeService;
     }
 
+    @Transactional
     public void disbandCrew(FlightDto flightDto, Locale locale) {
         Flight bobtailFlight = flightService.convertToFlight(flightDto, locale);
         int crewId = bobtailFlight.getCrew().getId();
         bobtailFlight.setCrew(null);
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            flightService.updateFlight(bobtailFlight);
-            Crew crew = crewService.findCrew(crewId);
-            crewService.deleteCrew(crew);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            log.error(e);
-        }
+        flightService.updateFlight(bobtailFlight);
+        Crew crew = crewService.findCrew(crewId);
+        crewService.deleteCrew(crew);
     }
 
     public Crew getCrew(int crewId) {
         if (crewId == 0) {
             return new Crew();
         }
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        Crew crew = crewService.findCrew(crewId);
-        tx.commit();
-        return crew;
+        return crewService.findCrew(crewId);
     }
 
     public List<Employee> loadAllUnusedEmployees(Crew crew) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
         List<Employee> employees = employeeService.findAllEmployees();
-        tx.commit();
         if (crew != null) {
             employees.removeAll(crew.getEmployees());
         }
         return employees;
     }
 
+    @Transactional
     public void fireEmployee(int employeeId) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            final Employee employee = employeeService.findEmployee(employeeId);
-            employee.getCrews().forEach(crew -> {
-                crew.getEmployees().remove(employee);
-                crewService.updateCrew(crew);
-            });
-            employeeService.deleteEmployee(employee);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            log.error(e);
-        }
+        final Employee employee = employeeService.findEmployee(employeeId);
+        employee.getCrews().forEach(crew -> {
+            crew.getEmployees().remove(employee);
+            crewService.updateCrew(crew);
+        });
+        employeeService.deleteEmployee(employee);
     }
 
+    @Transactional
     public void editCrew(Flight flight) {
         Crew crew = flight.getCrew();
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            if (crew.getId() == 0) {
-                Flight flightWithFullData = flightService.findFlight(flight.getId());
-                crewService.saveCrew(crew);
-                flightWithFullData.setCrew(crew);
-                flightService.updateFlight(flightWithFullData);
-            }
-            crewService.updateCrew(crew);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
+        if (crew.getId() == 0) {
+            Flight flightWithFullData = flightService.findFlight(flight.getId());
+            crewService.saveCrew(crew);
+            flightWithFullData.setCrew(crew);
+            flightService.updateFlight(flightWithFullData);
         }
+        crewService.updateCrew(crew);
     }
 }

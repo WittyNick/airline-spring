@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,16 +17,19 @@ public class FlightDao {
         this.sessionFactory = sessionFactory;
     }
 
+    @Transactional
     public void save(Flight flight) {
         Session session = sessionFactory.getCurrentSession();
         session.save(flight);
     }
 
+    @Transactional
     public Flight findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Flight.class, id);
     }
 
+    @Transactional
     @SuppressWarnings(value = "unchecked")
     public List<Flight> findAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -33,11 +37,13 @@ public class FlightDao {
         return query.list();
     }
 
+    @Transactional
     public void update(Flight flight) {
         Session session = sessionFactory.getCurrentSession();
         session.update(flight);
     }
 
+    @Transactional
     public void delete(Flight flight) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(flight);

@@ -13,20 +13,14 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private static final Logger log = LogManager.getLogger(EmployeeService.class);
-    private SessionFactory sessionFactory;
     private EmployeeDao employeeDao;
 
-    public EmployeeService(SessionFactory sessionFactory, EmployeeDao employeeDao) {
-        this.sessionFactory = sessionFactory;
+    public EmployeeService(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;
     }
 
     public void saveEmployee(Employee employee) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
         employeeDao.save(employee);
-        tx.commit();
     }
 
     public Employee findEmployee(int id) {

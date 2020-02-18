@@ -10,14 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdministratorService {
-    private SessionFactory sessionFactory;
     private final String dateHtmlInputPattern = "yyyy-MM-dd";
     private final String htmlHtmlInputPattern = "HH:mm";
 
     private FlightService flightService;
 
-    public AdministratorService(SessionFactory sessionFactory, FlightService flightService) {
-        this.sessionFactory = sessionFactory;
+    public AdministratorService(FlightService flightService) {
         this.flightService = flightService;
     }
 
@@ -32,10 +30,7 @@ public class AdministratorService {
             flightDto.setCrew(new Crew());
             return flightDto; // flightId = 0, crewId = 0;
         }
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
         Flight flight = flightService.findFlight(flightId);
-        tx.commit();
         return flightService.convertToDto(flight, dateHtmlInputPattern, htmlHtmlInputPattern);
     }
 
@@ -46,17 +41,10 @@ public class AdministratorService {
         if (crew != null && crew.getId() == 0) {
             bobtailFlight.setCrew(null);
         }
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            if (flightDto.getId() > 0) {
-                flightService.updateFlight(bobtailFlight);
-            } else {
-                flightService.saveFlight(bobtailFlight);
-            }
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
+        if (flightDto.getId() > 0) {
+            flightService.updateFlight(bobtailFlight);
+        } else {
+            flightService.saveFlight(bobtailFlight);
         }
     }
 }

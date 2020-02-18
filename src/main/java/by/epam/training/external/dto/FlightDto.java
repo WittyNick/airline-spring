@@ -93,20 +93,4 @@ public class FlightDto {
     public void setCrew(Crew crew) {
         this.crew = crew;
     }
-
-    @Override
-    public String toString() {
-        return "FlightDto{" +
-                "id=" + id +
-                ", flightNumber=" + flightNumber +
-                ", startPoint='" + startPoint + '\'' +
-                ", destinationPoint='" + destinationPoint + '\'' +
-                ", departureDate='" + departureDate + '\'' +
-                ", departureTime='" + departureTime + '\'' +
-                ", arrivalDate='" + arrivalDate + '\'' +
-                ", arrivalTime='" + arrivalTime + '\'' +
-                ", plane='" + plane + '\'' +
-                ", crew=" + crew +
-                '}';
-    }
 }

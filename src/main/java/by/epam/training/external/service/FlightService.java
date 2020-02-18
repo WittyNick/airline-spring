@@ -1,6 +1,5 @@
 package by.epam.training.external.service;
 
-import by.epam.training.external.dao.DaoFactory;
 import by.epam.training.external.dao.FlightDao;
 import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.entity.Crew;
@@ -23,12 +22,13 @@ import java.util.Locale;
 @Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
-    private MessageSource messageSource;
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-    private FlightDao flightDao = DaoFactory.getInstance().getFlightDao();
+    private MessageSource messageSource;
+    private FlightDao flightDao;
 
-    public FlightService(MessageSource messageSource) {
+    public FlightService(MessageSource messageSource, FlightDao flightDao) {
         this.messageSource = messageSource;
+        this.flightDao = flightDao;
     }
 
     public void saveFlight(Flight flight) {

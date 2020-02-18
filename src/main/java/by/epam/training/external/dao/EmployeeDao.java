@@ -1,29 +1,28 @@
 package by.epam.training.external.dao;
 
 import by.epam.training.external.entity.Employee;
+import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class EmployeeDao extends GenericDao<Employee> {
+@Repository
+public class EmployeeDao {
+    private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
 
-    EmployeeDao() {
-    }
-
-    @Override
     public void save(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
         session.save(employee);
     }
 
-    @Override
     public Employee findById(int id) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Employee.class, id);
     }
 
-    @Override
     @SuppressWarnings(value = "unchecked")
     public List<Employee> findAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -31,13 +30,11 @@ public class EmployeeDao extends GenericDao<Employee> {
         return query.list();
     }
 
-    @Override
     public void update(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
         session.update(employee);
     }
 
-    @Override
     public void delete(Employee employee) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(employee);

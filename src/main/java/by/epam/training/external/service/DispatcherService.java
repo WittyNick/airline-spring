@@ -19,12 +19,14 @@ import java.util.Locale;
 public class DispatcherService {
     private static final Logger log = LogManager.getLogger(DispatcherService.class);
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-    private CrewService crewService = new CrewService();
+    private CrewService crewService;
     private FlightService flightService;
-    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeService employeeService;
 
-    public DispatcherService(FlightService flightService) {
+    public DispatcherService(CrewService crewService, FlightService flightService, EmployeeService employeeService) {
+        this.crewService = crewService;
         this.flightService = flightService;
+        this.employeeService = employeeService;
     }
 
     public void disbandCrew(FlightDto flightDto, Locale locale) {

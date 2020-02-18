@@ -1,6 +1,5 @@
 package by.epam.training.external.service;
 
-import by.epam.training.external.dao.DaoFactory;
 import by.epam.training.external.dao.EmployeeDao;
 import by.epam.training.external.entity.Employee;
 import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
@@ -17,7 +16,11 @@ import java.util.List;
 public class EmployeeService {
     private static final Logger log = LogManager.getLogger(EmployeeService.class);
     private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
-    private EmployeeDao employeeDao = DaoFactory.getInstance().getEmployeeDao();
+    private EmployeeDao employeeDao;
+
+    public EmployeeService(EmployeeDao employeeDao) {
+        this.employeeDao = employeeDao;
+    }
 
     public void saveEmployee(Employee employee) {
         Session session = sessionFactory.getCurrentSession();

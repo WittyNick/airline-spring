@@ -4,24 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <filter>
-        <filter-name>administratorFilter</filter-name>
-        <filter-class>by.epam.training.external.controller.filter.AdministratorFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>administratorFilter</filter-name>
-        <url-pattern>/administrator/*</url-pattern>
-    </filter-mapping>
-
-    <filter>
-        <filter-name>dispatcherFilter</filter-name>
-        <filter-class>by.epam.training.external.controller.filter.DispatcherFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>dispatcherFilter</filter-name>
-        <url-pattern>/dispatcher/*</url-pattern>
-    </filter-mapping>
-
     <!--Можно все описать в DispatcherServlet init-param, но можно так разделить на RootContext и ServletContext-->
     <context-param>
         <param-name>contextClass</param-name>

@@ -1,11 +1,13 @@
 package by.epam.training.external.controller.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebFilter("/administrator/*")
 public class AdministratorFilter implements Filter {
 
     @Override

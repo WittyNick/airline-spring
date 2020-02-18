@@ -1,7 +1,6 @@
 package by.epam.training.external.dao;
 
 import by.epam.training.external.entity.Employee;
-import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,7 +10,11 @@ import java.util.List;
 
 @Repository
 public class EmployeeDao {
-    private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
+
+    public EmployeeDao(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     public void save(Employee employee) {
         Session session = sessionFactory.getCurrentSession();

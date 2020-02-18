@@ -4,7 +4,6 @@ import by.epam.training.external.dao.FlightDao;
 import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.entity.Crew;
 import by.epam.training.external.entity.Flight;
-import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -22,11 +21,12 @@ import java.util.Locale;
 @Service
 public class FlightService {
     private static final Logger log = LogManager.getLogger(FlightService.class);
-    private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
     private MessageSource messageSource;
     private FlightDao flightDao;
 
-    public FlightService(MessageSource messageSource, FlightDao flightDao) {
+    public FlightService(SessionFactory sessionFactory, MessageSource messageSource, FlightDao flightDao) {
+        this.sessionFactory = sessionFactory;
         this.messageSource = messageSource;
         this.flightDao = flightDao;
     }

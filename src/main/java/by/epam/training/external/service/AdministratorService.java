@@ -3,7 +3,6 @@ package by.epam.training.external.service;
 import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.entity.Crew;
 import by.epam.training.external.entity.Flight;
-import by.epam.training.external.service.util.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdministratorService {
-    private SessionFactory sessionFactory = HibernateSessionFactoryUtil.getSessionFactory();
+    private SessionFactory sessionFactory;
     private final String dateHtmlInputPattern = "yyyy-MM-dd";
     private final String htmlHtmlInputPattern = "HH:mm";
 
     private FlightService flightService;
 
-    public AdministratorService(FlightService flightService) {
+    public AdministratorService(SessionFactory sessionFactory, FlightService flightService) {
+        this.sessionFactory = sessionFactory;
         this.flightService = flightService;
     }
 

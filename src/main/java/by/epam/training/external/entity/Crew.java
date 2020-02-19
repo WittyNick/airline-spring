@@ -37,10 +37,6 @@ public class Crew {
         this.name = name;
     }
 
-    public void removeEmployee(Employee employee) {
-        employees.remove(employee);
-    }
-
     public int getId() {
         return id;
     }

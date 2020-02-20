@@ -30,10 +30,9 @@ public class FlightDao {
     }
 
     @Transactional
-    @SuppressWarnings(value = "unchecked")
     public List<Flight> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        Query<Flight> query = session.createQuery("FROM Flight");
+        Query<Flight> query = session.createQuery("FROM Flight", Flight.class);
         return query.list();
     }
 

@@ -4,11 +4,6 @@ import by.epam.training.external.dto.FlightDto;
 import by.epam.training.external.entity.Crew;
 import by.epam.training.external.entity.Employee;
 import by.epam.training.external.entity.Flight;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

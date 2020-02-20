@@ -3,11 +3,8 @@ package by.epam.training.external.dao;
 import by.epam.training.external.entity.Crew;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Repository
 public class CrewDao {

@@ -30,10 +30,9 @@ public class EmployeeDao {
     }
 
     @Transactional
-    @SuppressWarnings(value = "unchecked")
     public List<Employee> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        Query<Employee> query = session.createQuery("FROM Employee");
+        Query<Employee> query = session.createQuery("FROM Employee", Employee.class);
         return query.list();
     }
 

@@ -10,8 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <gson.ver>2.8.6</gson.ver>
-        <log4j.ver>2.13.0</log4j.ver>
+        <log4j-slf4j.ver>2.13.0</log4j-slf4j.ver>
         <postgres.driver.ver>42.2.9</postgres.driver.ver>
         <servlet.ver>4.0.1</servlet.ver>
         <spring.version>5.2.0.RELEASE</spring.version>
@@ -31,25 +30,12 @@
     </build>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.ver}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.ver}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.ver}</version>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j-slf4j.ver}</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
